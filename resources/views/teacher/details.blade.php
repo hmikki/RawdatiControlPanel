@@ -6,30 +6,41 @@
             <div class="col-md-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <p class="card-title mb-0" style="margin : 20px 10px">{{$teacher['name']}}</p>
+                  <p class="card-title mb-0" style="margin : 20px 10px">@lang('dashboard.teacher_details') </p>
                   <hr>
-                     <div class="col" style="margin : 20px 10px">
-                     <h6>Name : {{$teacher['name']}}</h6>
+                  <div class="row justify-content-between">
+
+
+                  
+                     <div class="col-7" style="margin : 20px 10px">
+                     <h6>@lang('dashboard.name'): {{$teacher['name']}}</h6>
                      <br>
-                     <h6>Email : {{$teacher['email']}}</h6>
+                     <h6>@lang('dashboard.email'): {{$teacher['email']}}</h6>
                      <br>
-                     <h6>Identification Number : {{$teacher['identification_number']}}</h6>
+                     <h6>@lang('dashboard.identification_number'): {{$teacher['identification_number']}}</h6>
                      <br>
-                     <h6>Phone : {{$teacher['phone']}}</h6>
+                     <h6>@lang('dashboard.phone'): {{$teacher['phone']}}</h6>
                      <br>
-                     <h6>Password : {{$teacher['password']}}</h6>
+                     <h6>@lang('dashboard.password'): {{$teacher['password']}}</h6>
                      <br>
-                     <h6>Gender : {{$teacher['gender']}}</h6>
+                     <h6>@lang('dashboard.gender'): {{$teacher['gender']}}</h6>
                     </div>
+                    <div class="col-4" >
+                        <h6>{{$teacher['name']}} QR :</h6>
+                        <img style="hieght:150px ; width:150px" src="data:image/png;base64, <?php echo $teacher['teacher_qr']; ?> " />
+                     
+                    </div>
+
+</div>
                     <div class="row" style="margin : 20px 10px">
                          <form action="{{url('teacher/delete/'.$id)}}" method="POST">
                            @csrf
-                           <button type="submit" class="btn btn-danger">Delete</button>
+                           <button type="submit" class="btn btn-danger">@lang('dashboard.delete')</button>
                          </form>
                          <div style="margin : 20px 10px" ></div>
                          <form action="{{url('teacher')}}" method="GET">
                            @csrf
-                           <button type="submit" class="btn btn-light">Cancel</button>
+                           <button type="submit" class="btn btn-light">@lang('dashboard.cancel')</button>
                          </form>
                          <br>
                          

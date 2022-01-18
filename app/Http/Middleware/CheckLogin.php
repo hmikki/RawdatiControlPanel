@@ -16,7 +16,7 @@ class CheckLogin
      */
     public function handle(Request $request, Closure $next)
     {   
-        if($request['name']=="admin" && $request['password']=="admin123456"){
+        if($request['name']=="admin" && $request['password']=="123456"){
             return $next($request);
         }else{
             return response()->view('welcome') ;

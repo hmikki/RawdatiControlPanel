@@ -16,6 +16,11 @@
   <link rel="stylesheet" href="{{asset('vendors/select2/select2.min.css')}}">
   <link rel="stylesheet" href="{{asset('vendors/select2-bootstrap-theme/select2-bootstrap.min.css')}}">
   <link rel="stylesheet" href="{{asset('vendors/mdi/css/materialdesignicons.min.css')}}">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
   <div class="container-scroller">
@@ -42,16 +47,27 @@
         </ul>
         <ul class="navbar-nav navbar-nav-right">
           
+        
+          <!-- <li class="nav-item nav-settings d-none d-lg-flex">
+            <a class="nav-link" href="{{url('localization')}}" >
+              <i class="icon-ellipsis"></i>
+            </a>
+          </li> -->
+          <li>
+             <div class="dropdown" style="margin:10px ;">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{app()->getLocale() == 'ar'? 'Arabic':'English'}}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="{{url(app()->getLocale() == 'ar'? 'en'.'/' .'index?name=admin&password=123456':'ar' .'/' .'index?name=admin&password=123456')}}">{{app()->getLocale() == 'ar'? 'English':'Arabic'}}</a>
+                </div>
+              </div>
+          </li>
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
               <img src="{{asset('images/admin.png')}}" alt="profile"/>
             </a>
            
-          </li>
-          <li class="nav-item nav-settings d-none d-lg-flex">
-            <a class="nav-link" href="#">
-              <i class="icon-ellipsis"></i>
-            </a>
           </li>
         </ul>
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
@@ -68,22 +84,22 @@
  -->   <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item{{ $activePage == 'dashboardd' ? ' active' : '' }}">
-            <a class="nav-link" href="{{url('index'.'?name=admin&password=admin123456')}}">
+            <a class="nav-link" href="{{url(app()->getLocale() .'/'.'index'.'?name=admin&password=123456')}}">
               <i class="icon-grid menu-icon"></i>
-              <span class="menu-title">Dashboard</span>
+              <span class="menu-title">@lang('dashboard.dashboard')</span>
             </a>
           </li>
           <li class="nav-item {{$activePage == 'teacher' ? ' active' : '' }}" >
             <a class="nav-link" data-toggle="collapse" href="#ui-basic"  aria-controls="ui-basic">
               <i class="icon-layout menu-icon"></i>
-              <span class="menu-title">Teachers</span>
+              <span class="menu-title">@lang('dashboard.teachers')</span>
               <i class="menu-arrow"></i>
             </a>
 
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item" > <a class="nav-link" href="{{url('teacher')}}">All Teachers</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{url('teacher/create')}}">Add Teacher</a></li>
+                <li class="nav-item" > <a class="nav-link" href="{{url( app()->getLocale() .'/'.'teacher')}}">@lang('dashboard.all_teachers')</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{url(app()->getLocale() .'/'. 'teacher/create')}}">@lang('dashboard.add_teacher')</a></li>
 <!--                 <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
  -->              </ul>
             </div>
@@ -91,26 +107,26 @@
           <li class="nav-item {{$activePage == 'student_details' || $activePage =='student_create' || $activePage =='student_edit' ? ' active' : '' }}">
             <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
               <i class="icon-columns menu-icon"></i>
-              <span class="menu-title">Students</span>
+              <span class="menu-title">@lang('dashboard.students')</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="form-elements">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="{{url('student')}}">All Students</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{url('student/create')}}">Add Student</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{url(app()->getLocale() .'/'. 'student')}}">@lang('dashboard.all_students')</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{url(app()->getLocale() .'/'. 'student/create')}}">@lang('dashboard.add_student')</a></li>
               </ul>
             </div>
           </li>
           <li class="nav-item {{ $activePage == 'section_details' || $activePage =='section_create' || $activePage =='section_edit'? ' active' : '' }}" >
             <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
               <i class="icon-bar-graph menu-icon"></i>
-              <span class="menu-title">Section</span>
+              <span class="menu-title">@lang('dashboard.sections')</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="charts">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{url('section')}}">All Section</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{url('section/create')}}">Add Section</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{url(app()->getLocale() .'/'. 'section')}}">@lang('dashboard.all_sections')</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{url(app()->getLocale() .'/'. 'section/create')}}">@lang('dashboard.add_section')</a></li>
               </ul>
             </div>
           </li>
@@ -133,8 +149,10 @@
     <!-- page-body-wrapper ends -->
   </div>
 
+
+
   <!-- plugins:js -->
-  <script src="vendors/js/vendor.bundle.base.js"></script>
+  <script src="{{asset('vendors/js/vendor.bundle.base.js')}}"></script>
   <!-- endinject -->
   <!-- Plugin js for this page -->
   <script src="{{asset('vendors/chart.js/Chart.min.js')}}"></script>
@@ -152,7 +170,10 @@
   <!-- endinject -->
   <!-- Custom js for this page-->
   <script src="{{asset('js/dashboard.js')}}"></script>
-  <script src="{{asset('js/Chart.roundedBarCharts.js')}}"></script>-->
+  <script src="{{asset('js/Chart.roundedBarCharts.js')}}"></script>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
   <!-- End custom js for this page-->
 
    <!--<script src="{{asset('vendors/js/vendor.bundle.base.js')}}"></script>-->
@@ -174,16 +195,7 @@
 
 
  
-<script type="text/javascript">
-  $('#del_btn').click(function  (e) {
-    e.perventDefault();
-    var subCon = confirm('Are you Sure ??');
-    if (subCon) {
-      $('#del_form').submit();
-    };
-  });
 
-</script>
 
 
 </body>

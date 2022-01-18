@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Kreait\Firebase\Database;
 use Illuminate\Support\Str;
+use BaconQrCode\Renderer\ImageRenderer;
+use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
+use BaconQrCode\Renderer\RendererStyle\RendererStyle;
+use BaconQrCode\Writer;
 use Mail;
 
 
@@ -27,6 +31,17 @@ class TeacherController extends Controller
  
     public function store(Request $request){
     	$pass = Str::random(10);
+
+      $ref = $this->database->getReference($this->table_name)->push()->getKey();
+        //dd($ref);
+        $renderer = new ImageRenderer(
+          new RendererStyle(400),
+          new ImagickImageBackEnd()
+          );
+          $writer = new Writer($renderer);
+          $writer->writeFile('Hello World!', 'qrcode.png');
+          $image = base64_encode($writer->writeString($ref));
+
     	$postData = [
           'name' => $request['name'],
           'identification_number' => $request['identification_number'],
@@ -34,9 +49,11 @@ class TeacherController extends Controller
           'phone' => $request['phone'],
           'gender' => $request['gender'],
           'notification_id' => '',
+          'teacher_qr' => $image,
           'password' => $pass ,
     	];
-        $postRef = $this->database->getReference($this->table_name)->push($postData);
+        $postRef = $this->database->getReference( $this->table_name.'/'.$ref)->update($postData);
+
          if($postData){
               $data = array('name'=>"{{$request['name']}}" , 'password' => "{{$pass}}");
                  
@@ -48,7 +65,8 @@ class TeacherController extends Controller
                    
                });
              }
-        return redirect('teacher')->with( ['data' => $postData] );
+             // return redirect('teacher');
+         return redirect('teacher')->with( ['data' => $postData] );
         // if($postRef){
         // 	//alert('Teacher Not Added ');
         //     // return view('teacher.create')->with('status' , 'Teacher Added Successfully');
@@ -76,8 +94,12 @@ class TeacherController extends Controller
           'gender' => $request['gender'],
     	];
         $res_updated = $this->database->getReference( $this->table_name.'/'.$key)->update($updateData);
+        $isUpdated = false ;
+        if($res_updated){
+          $isUpdated = true ;
+        }
         
-    	return redirect('teacher');  
+    	return redirect('teacher')->with('update' , $isUpdated);  
 
         // if($res_updated){
         //   return redirect('teacher.edit')->with('status' , 'Contact Updated Successfully');	
@@ -88,7 +110,11 @@ class TeacherController extends Controller
     public function destroy($id){
     	
         $deleted_data =$this->database->getReference($this->table_name.'/'.$id)->remove();
-          return redirect('teacher');	
+        $isDeleted = false ;
+        if($deleted_data){
+          $isDeleted = true ;
+        }
+          return redirect('teacher')->with('deleted' , $isDeleted);	
     }
 
     

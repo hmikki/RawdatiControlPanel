@@ -23,24 +23,24 @@
                 <div class="col-md-6 mb-4 stretch-card transparent">
                   <div class="card card-light-danger">
                     <div class="card-body">
-                      <p class="fs-30 mb-2">Teachers</p>
+                      <p class="fs-30 mb-2">@lang('dashboard.teachers')</p>
                       <!-- <form method="GET" action="{{URL('teacher')}}"> 
                           <button type="submit" class="btn btn-sm" style="background-color: white; color:black">Lets Go</button>
                       </form> -->
                       <hr>
-                      <a href="{{URL('teacher')}}" style="color:white ; text-decoration: underline">more details</a>
+                      <a href="{{URL(app()->getLocale() .'/'.'teacher')}}" style="color:white ; text-decoration: underline">@lang('dashboard.more_details')</a>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-6 mb-4 stretch-card transparent">
                   <div class="card card-tale">
                     <div class="card-body">
-                      <p class="fs-30 mb-2">Students</p>
+                      <p class="fs-30 mb-2">@lang('dashboard.students')</p>
                       <hr>
                        <!-- <form method="GET" action="{{URL('student')}}"> 
                           <button type="submit" class="btn btn-sm" style="background-color: white; color:black">Lets Go</button>
                       </form> -->
-                      <a href="{{URL('student')}}" style="color:white ; text-decoration: underline">more details</a>
+                      <a href="{{URL(app()->getLocale() .'/'.'student')}}" style="color:white ; text-decoration: underline">@lang('dashboard.more_details')</a>
 
                      </div>
                   </div>
@@ -50,9 +50,9 @@
                 <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
                   <div class="card card-light-blue">
                     <div class="card-body">
-                      <p class="fs-30 mb-2">Sections</p>
+                      <p class="fs-30 mb-2">@lang('dashboard.sections')</p>
                       <hr>
-                      <a href="{{URL('section')}}" style="color:white ; text-decoration: underline">more details</a>
+                      <a href="{{URL(app()->getLocale() .'/'.'section')}}" style="color:white ; text-decoration: underline">@lang('dashboard.more_details')</a>
 
                       <!-- <form method="GET" action="{{URL('section')}}"> 
                           <button type="submit" class="btn btn-sm" style="background-color: white; color:black">Lets Go</button>
@@ -63,7 +63,7 @@
                
               </div>
             </div>
-            <div class="col-md-6 grid-margin stretch-card">
+            <!-- <div class="col-md-6 grid-margin stretch-card">
               <div class="card tale-bg">
                 <div class="card-people mt-auto">
                   <img src="images/dashboard/people.svg" alt="people">
@@ -80,7 +80,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
  @stop

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Kreait\Firebase\Database;
+use App ;
 
 
 class SectionController extends Controller
@@ -13,11 +14,30 @@ class SectionController extends Controller
         $this->database = $database;
         $this->table_name = "sections";
     }
-    public function index(){
-    	$sections = $this->database->getReference($this->table_name)->getValue();
-    	$teachers = $this->database->getReference('teachers')->getValue();
+    public function index(Request $request){
+       $filter = $request['filter'];
+       $teachers = $this->database->getReference('teachers')->getValue();
 
-		return view('section.index')->with('sections',$sections)->with('teachers' , $teachers);
+        if($filter){
+          $sections_firebase = $this->database->getReference($this->table_name)->getValue();
+          $sections = array();
+          foreach ($sections_firebase as $key => $value) {
+            if ($filter == -1) {
+              $sections = $this->database->getReference($this->table_name)->getValue();
+              return view('section.index')->with('sections',$sections)->with('teachers' , $teachers)->with('filter_word' , $filter );
+         
+            }
+           elseif (strpos($value['category'] , $filter) !== false) {
+              //dd($value['name']) ;
+             $sections[$key]  = $value;
+            }
+          }
+            return view('section.index')->with('sections',$sections)->with('teachers' , $teachers)->with('filter_word' , $filter );
+      }
+       $sections = $this->database->getReference($this->table_name)->getValue();
+       return view('section.index')->with('sections',$sections)->with('teachers' , $teachers)->with('filter_word' , -1 );
+            
+    	
 	}
      public function create(){
      	$teachers = $this->database->getReference('teachers')->getValue();
@@ -49,8 +69,11 @@ class SectionController extends Controller
           'teacher_id' => $request['teacher_id'],
     	];
         $res_updated = $this->database->getReference( $this->table_name.'/'.$key)->update($updateData);
-        
-    	return redirect('section');  
+        $isUpdated = false ;
+        if($res_updated){
+          $isUpdated = true ;
+        }
+    	return redirect('section')->with('update' , $isUpdated);  
 
         // if($res_updated){
         //   return redirect('teacher.edit')->with('status' , 'Contact Updated Successfully');	
@@ -61,7 +84,11 @@ class SectionController extends Controller
     public function destroy($id){
     	
         $deleted_data =$this->database->getReference($this->table_name.'/'.$id)->remove();
-          return redirect('section');	
+        $isDeleted = false ;
+        if($deleted_data){
+          $isDeleted = true ;
+        }
+          return redirect('section')->with('deleted' , $isDeleted);	
     }
 
 
@@ -69,7 +96,8 @@ class SectionController extends Controller
     {
       $section = $this->database->getReference($this->table_name)->getChild($id)->getValue();
       $teachers = $this->database->getReference('teachers')->getValue();
-      return view('section.details')->with('section' ,$section)->with('teachers' ,$teachers)->with('id',$id);
+      $students = $this->database->getReference('students')->getValue();
+      return view('section.details')->with('section' ,$section)->with('teachers' ,$teachers)->with('students' ,$students)->with('id',$id);
     }
     public function generate($id){
       $renderer = new ImageRenderer(
@@ -95,7 +123,17 @@ class SectionController extends Controller
     {
       return view('firebase.contact.qr');
     }
+    public function map(){
 
+      return view('student.map_view');
+    }
+
+    public function test(){
+      $req_uri = $_SERVER['REQUEST_URI'];
+      $path = substr($req_uri,0,strrpos($req_uri,'/'));
+      dd($req_uri);
+    }
+    
 
 
 

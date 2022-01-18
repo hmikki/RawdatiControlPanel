@@ -21,11 +21,38 @@ class StudentController extends Controller
         $this->database = $database;
         $this->table_name = "students";
     }
-	public function index(){
+	public function index(Request $request){
+    $word = $request['search'] ;
+    if($word){
+      $students_firebase = $this->database->getReference($this->table_name)->getValue();
+      $students = array();
+      foreach ($students_firebase as $key => $value) {
+        if (strpos(strtolower($value['name']) , strtolower($word)) !== false) {
+          //dd($value['name']) ;
+         $students[$key]  = $value;
+        }
+      }
+      // dd($students);
+          return view('student.index')->with('students',$students);
+    }
 		$students = $this->database->getReference($this->table_name)->getValue();
-		
 		return view('student.index')->with('students',$students);
 	}
+  public function search(Request $request){
+
+      $word = $request['search'] ;
+      $students_firebase = $this->database->getReference('students')->getValue();
+      $students = array();
+      foreach ($students_firebase as $key => $value) {
+        if (strpos(strtolower($value['name']) , strtolower($word)) !== false) {
+          //dd($value['name']) ;
+         $students[]  = $value;
+        }
+      }
+
+      //dd($students);
+    return view('student.index')->with('students',$students);
+  }
      public function create(){
         $sections = $this->database->getReference('sections')->getValue();
     	return view('student.create')->with('sections',$sections);
@@ -33,7 +60,8 @@ class StudentController extends Controller
  
     public function store(Request $request){
     	$pass = Str::random(10);
-
+      $ref = $this->database->getReference($this->table_name)->push()->getKey();
+        //dd($ref);
         $sections = $this->database->getReference('sections')->getValue();
         $renderer = new ImageRenderer(
           new RendererStyle(400),
@@ -41,7 +69,7 @@ class StudentController extends Controller
           );
           $writer = new Writer($renderer);
           $writer->writeFile('Hello World!', 'qrcode.png');
-          $image = base64_encode($writer->writeString($request['identification_number']));
+          $image = base64_encode($writer->writeString($ref));
           //dd($image);
 
 
@@ -60,10 +88,14 @@ class StudentController extends Controller
           'long' => '',
     	];
         
-
+            $isAdded = false ;
         
-              $postRef = $this->database->getReference($this->table_name)->push($postData);
-             if($postData){
+              
+              // $postRef = $ref->setValue($postData);
+              // dd($postRef);
+            $postRef = $this->database->getReference( $this->table_name.'/'.$ref)->update($postData);
+
+             if($postRef){
               $data = array('name'=>"{{$request['name']}}" , 'password' => "{{$pass}}");
                  
                 Mail::send(['text'=>'mail'], $data, function($message) use($request) {
@@ -73,17 +105,23 @@ class StudentController extends Controller
                    $message->from('ameera.alanqar@gmail.com','Rawdati App');
                    
                });
+                $isAdded = true;
              }
-           
+             //dd($isAdded);
+
            //return redirect()->back()->withInput()->with('error','check your internet connection');
               
-
+           $id =$postRef->getKey();
+           $student = $this->database->getReference($this->table_name)->getChild($id)->getValue();
+           $sections = $this->database->getReference('sections')->getValue();
 
            
+
+
         
 
 
-        return redirect('student')->with( ['data' => $postData] );
+        // return view('student.details')->with( ['student'=>$student , 'sections'=>$sections , 'id'=>$id] )->with('isAdded' , $isAdded );
         // if($postRef){
         // 	//alert('Teacher Not Added ');
         //     // return view('teacher.create')->with('status' , 'Teacher Added Successfully');
@@ -93,6 +131,8 @@ class StudentController extends Controller
         // 	return redirect()->back() ->with('alert', 'Teacher Not Added');
         // 	// return view('teacher.create')->with('status' , 'Teacher Not Added ');
         // }
+
+           return redirect("student/details/$ref");
         
     }
 
@@ -114,8 +154,12 @@ class StudentController extends Controller
           'section' => $request['section'],          
     	];
         $res_updated = $this->database->getReference( $this->table_name.'/'.$key)->update($updateData);
+        $isUpdated = false ;
+        if($res_updated){
+          $isUpdated = true ;
+        }
         
-    	return redirect('student');  
+      return redirect('student')->with('update' , $isUpdated);
 
         // if($res_updated){
         //   return redirect('teacher.edit')->with('status' , 'Contact Updated Successfully');	
@@ -126,7 +170,11 @@ class StudentController extends Controller
     public function destroy($id){
     	
         $deleted_data =$this->database->getReference($this->table_name.'/'.$id)->remove();
-          return redirect('student');	
+        $isDeleted = false ;
+        if($deleted_data){
+          $isDeleted = true ;
+        }
+          return redirect('student')->with('deleted' , $isDeleted);	
     }
     public function details($id)
     {
@@ -147,4 +195,6 @@ class StudentController extends Controller
       });
       echo "Basic Email Sent. Check your inbox.";
    }
+
+   
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Animated Login Form</title>
+	<title>Rawdati Admin</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
 	<script src="https://kit.fontawesome.com/a81368914c.js"></script>
@@ -14,7 +14,7 @@
 			<img src="{{asset('images/bg.svg')}}">
 		</div>
 		<div class="login-content">
-			<form action="{{URL('index')}}" method="GET">
+			<form action="{{ url(app()->getLocale() .'/'.'index'.'?name=admin&password=123456')}}" method="GET">
 				<img src="{{asset('images/avatar.svg')}}">
 				<h2 class="title">Welcome</h2>
            		<div class="input-div one">
