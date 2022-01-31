@@ -15,6 +15,7 @@
 		</div>
 		<div class="login-content">
 			<form action="{{ url(app()->getLocale() .'/'.'index'.'?name=admin&password=123456')}}" method="GET">
+        @csrf
 				<img src="{{asset('images/avatar.svg')}}">
 				<h2 class="title">Welcome</h2>
            		<div class="input-div one">

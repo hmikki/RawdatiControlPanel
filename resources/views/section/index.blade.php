@@ -45,7 +45,7 @@
                 <div class="card-body">
                   <div class="row  d-flex justify-content-between" style="margin:10px 10px">
                        <p class="card-title mb-0">@lang('dashboard.all_sections')</p>
-                       <form action="{{url('section/create')}}" method="GET">
+                       <form action="{{url(app()->getLocale() .'/'.'section/create')}}" method="GET">
                         @csrf
                             <button type="submit" class="btn btn-success">@lang('dashboard.add')</button>
                        </form>
@@ -109,6 +109,7 @@
 
                             <form action="{{ url('section/edit/'.$id) }}" method="GET">
                               @csrf
+                             <input type="hidden" name = "lang" value = "{{app()->getLocale()}} ">
                               <button type="submit" class="btn  btn-outline-success btn-sm">
                                  <span class="mdi mdi-pencil mdi-lg" style="color:green "></span>
                               </button>
@@ -116,12 +117,13 @@
                             <div style="margin:0 10px"></div>
                             <form>
                               @csrf
-                              <a class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure?')" href="{{ url('section/delete/'.$id)}}"> <span class="mdi mdi-delete-forever" style="color:red"></span></a>
+                              <a class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure?')" href="{{ url('section/delete/'.$id.'?lang='). app()->getLocale()}}"> <span class="mdi mdi-delete-forever" style="color:red"></span></a>
 
                             </form>
                             <div style="margin:0 10px"></div>
                             <form action="{{ url('section/details/'.$id) }}" method="GET">
                               @csrf
+                              <input type="hidden" name = "lang" value = "{{app()->getLocale()}} ">
                               <button type="submit" class="btn btn-outline-primary  btn-sm">
                                   <span class="mdi mdi-account" style="color:blue"></span>
                               </button>

@@ -33,13 +33,15 @@
 
 </div>
                     <div class="row" style="margin : 20px 10px">
-                         <form action="{{url('teacher/delete/'.$id)}}" method="POST">
+                         <form action="{{url('teacher/delete/'.$id)}}" method="GET">
                            @csrf
+                           <input type="hidden" name = "lang" value = "{{app()->getLocale()}} ">
                            <button type="submit" class="btn btn-danger">@lang('dashboard.delete')</button>
                          </form>
                          <div style="margin : 20px 10px" ></div>
                          <form action="{{url('teacher')}}" method="GET">
                            @csrf
+                           <input type="hidden" name = "lang" value = "{{app()->getLocale()}} ">
                            <button type="submit" class="btn btn-light">@lang('dashboard.cancel')</button>
                          </form>
                          <br>

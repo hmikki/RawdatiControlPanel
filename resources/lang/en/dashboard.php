@@ -1,6 +1,7 @@
 <?php
 
 return[
+   'welcome' => 'Welcome to Rawdati',
    'dashboard' => 'Dashboard' ,
    'teachers' => 'Teachers',
    'students' => 'Students' ,
@@ -56,6 +57,9 @@ return[
    'select_section' => 'Select Section',
    'student_details' => 'Student Details',
    'select' => 'Select',
+
+   'bus_teacher' => 'Select a teacher to be tracked in the Bus',
+      'select_location' => 'Select Location',
 
 
 

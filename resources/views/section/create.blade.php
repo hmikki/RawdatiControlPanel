@@ -13,6 +13,7 @@
                   </p>
                   <form class="forms-sample" method="POST" action="{{url('section/store')}}">
                     @csrf
+                    <input type="hidden" name = "lang" value = "{{app()->getLocale()}} ">
                     <div class="form-group">
                       <label for="name">@lang('dashboard.name')</label>
                       <input type="text" class="form-control" name="name" id="name" placeholder="Name">
@@ -41,8 +42,8 @@
 
                       
                    
-                    <button type="submit" class="btn btn-primary mr-2">Add</button>
-                    <button class="btn btn-light">Cancel</button>
+                    <button type="submit" class="btn btn-primary mr-2">@lang('dashboard.add')</button>
+                    <button class="btn btn-light">@lang('dashboard.cancel')</button>
                   </form>
                 </div>
               </div>

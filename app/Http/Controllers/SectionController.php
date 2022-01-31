@@ -50,8 +50,8 @@ class SectionController extends Controller
           'teacher_id' => $request['teacher_id'],
     	];
         $postRef = $this->database->getReference($this->table_name)->push($postData);
-
-        return redirect('section')->with( ['data' => $postData] );
+        $lang = $request['lang'] ;
+        return redirect($lang.'/section')->with( ['data' => $postData] );
         
     }
     public function edit($id){
@@ -73,7 +73,8 @@ class SectionController extends Controller
         if($res_updated){
           $isUpdated = true ;
         }
-    	return redirect('section')->with('update' , $isUpdated);  
+      $lang = request()->get('lang');
+    	return redirect($lang. '/section')->with('update' , $isUpdated);  
 
         // if($res_updated){
         //   return redirect('teacher.edit')->with('status' , 'Contact Updated Successfully');	
@@ -88,7 +89,8 @@ class SectionController extends Controller
         if($deleted_data){
           $isDeleted = true ;
         }
-          return redirect('section')->with('deleted' , $isDeleted);	
+          $lang = request()->get('lang');
+          return redirect($lang.'/section')->with('deleted' , $isDeleted);	
     }
 
 
@@ -133,6 +135,7 @@ class SectionController extends Controller
       $path = substr($req_uri,0,strrpos($req_uri,'/'));
       dd($req_uri);
     }
+    
     
 
 

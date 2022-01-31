@@ -56,10 +56,10 @@
           <li>
              <div class="dropdown" style="margin:10px ;">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{app()->getLocale() == 'ar'? 'Arabic':'English'}}
+                  {{app()->getLocale() == 'ar'? 'العربية':'English'}}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="{{url(app()->getLocale() == 'ar'? 'en'.'/' .'index?name=admin&password=123456':'ar' .'/' .'index?name=admin&password=123456')}}">{{app()->getLocale() == 'ar'? 'English':'Arabic'}}</a>
+                  <a class="dropdown-item" href="{{url(app()->getLocale() == 'ar'? 'en'.'/' .'index?name=admin&password=123456':'ar' .'/' .'index?name=admin&password=123456')}}">{{app()->getLocale() == 'ar'? 'English':'العربية'}}</a>
                 </div>
               </div>
           </li>
@@ -149,7 +149,8 @@
     <!-- page-body-wrapper ends -->
   </div>
 
-
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACa0meLptdLQtMUZSFST8awFKIMiBbhGg&callback=initMap"type="text/javascript">
+  </script>
 
   <!-- plugins:js -->
   <script src="{{asset('vendors/js/vendor.bundle.base.js')}}"></script>

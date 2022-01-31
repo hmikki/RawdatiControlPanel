@@ -9,8 +9,7 @@
             <div class="col-md-12 grid-margin">
               <div class="row">
                 <div class="col-12 col-xl-8 mb-4 mb-xl-0" >
-                  <h3 class="font-weight-bold">Welcome to Rawdati</h3>
-                  <h6 class="font-weight-normal mb-0">All systems are running smoothly! </h6>
+                  <h3 class="font-weight-bold">@lang('dashboard.welcome')</h3>
                 </div>
                 
               </div>
@@ -62,7 +61,37 @@
                 </div>
                
               </div>
+
+               <div class="col-md-12 grid-margin transparent" style="margin-top: 40px;">
+                <form action="{{url('select_teacher')}}" method="GET">
+                  @csrf
+                  <input type="hidden" name = "lang" value = "{{app()->getLocale()}} ">
+                  <label for="category">@lang('dashboard.bus_teacher')</label>
+                  <select class="form-control" name="bus_teacher" id="bus_teacher" onchange="this.form.submit()" >
+                    <option value="">
+                      @php $check = false ; @endphp 
+                      @foreach($teachers  as $key => $teacher)
+                        @if($teacher['in_bus'] == true)
+                          {{$teacher['name']}}
+                          {{$check = true }}
+                          @break
+                        @endif
+                      @endforeach
+                      @if(!$check)
+                       @lang('dashboard.select')
+                      @endif
+                    </option>
+                    <option value="-2">no one</option>
+                     @foreach($teachers  as $key => $teacher)
+                       <option value="{{$key}}">{{$teacher['name']}}</option>
+                      @endforeach
+                  </select>
+
+                </form>
+                
             </div>
+            </div>
+           
             <!-- <div class="col-md-6 grid-margin stretch-card">
               <div class="card tale-bg">
                 <div class="card-people mt-auto">

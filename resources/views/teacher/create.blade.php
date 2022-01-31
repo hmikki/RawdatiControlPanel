@@ -15,6 +15,7 @@
                   </p>
                   <form class="forms-sample" method="POST" action="{{URL('teacher/store')}}">
                     @csrf
+                    <input type="hidden" name = "lang" value = "{{app()->getLocale()}} ">
                     <div class="form-group">
                       <label for="name">@lang('dashboard.name')</label>
                       <input type="text" class="form-control" name="name" id="name" placeholder="@lang('dashboard.enter') @lang('dashboard.name')">

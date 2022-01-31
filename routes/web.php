@@ -21,6 +21,8 @@ Route::group(['prefix' => '{locale}'] , function(){
 
 	 Route::get('teacher', 'TeacherController@index')->middleware('lang');
 	 Route::get('teacher/create' , 'TeacherController@create')->middleware('lang');
+	  // Route::get('student/delete/{id}' , 'StudentController@destroy');
+
 	 
 
 
@@ -42,7 +44,7 @@ Route::get('/', function () {
 });
 Route::get('test/{id}' , 'TestController@generate');
 
-
+Route::get('select_teacher' , 'MainController@selectTeacher');
 
 
  Route::get('buttons' , 'MainController@index2');
@@ -75,6 +77,39 @@ Route::get('test/{id}' , 'TestController@generate');
  Route::get('section/delete/{id}', 'SectionController@destroy');
  Route::get('section/cancel', 'SectionController@cancel');
  Route::get('section/details/{id}' , 'SectionController@details')->middleware('lang');
+
+
+
+ Route::get('select_location' , 'StudentController@location');
+ Route::get('submit_location' , 'StudentController@submit_location');
+ Route::get('edit_location' , 'StudentController@edit_location');
+
+
+
+//  Route::get('select_location', function(){
+//     $config = array();
+//     $config['center'] = 'auto';
+//     $config['onboundschanged'] = 'if (!centreGot) {
+//             var mapCentre = map.getCenter();
+//             marker_0.setOptions({
+//                 position: new google.maps.LatLng(mapCentre.lat(), mapCentre.lng())
+//             });
+//         }
+//         centreGot = true;';
+
+//     app('map')->initialize($config);
+
+//     // set up the marker ready for positioning
+//     // once we know the users location
+//     $marker = array();
+//     app('map')->add_marker($marker);
+
+//     $map = app('map')->create_map();
+//     echo "<html><head><script type='text/javascript'>var centreGot = false;</script>".$map['js']."</head><body>".$map['html']."</body></html>";
+// });
+
+
+
 
 Route::post('category/store' , 'Dashboard\CategoryController@store');
 Route::get('category/create' , 'Dashboard\CategoryController@create');

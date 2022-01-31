@@ -43,14 +43,15 @@ class TeacherController extends Controller
           $image = base64_encode($writer->writeString($ref));
 
     	$postData = [
-          'name' => $request['name'],
-          'identification_number' => $request['identification_number'],
-          'email' => $request['email'],
-          'phone' => $request['phone'],
-          'gender' => $request['gender'],
+          'name' => $request['name']?$request['name']:"",
+          'identification_number' => $request['identification_number']?$request['identification_number']:"",
+          'email' => $request['email']?$request['email']:"",
+          'phone' => $request['phone']?$request['phone']:"",
+          'gender' => $request['gender']?$request['gender']:"",
           'notification_id' => '',
           'teacher_qr' => $image,
           'password' => $pass ,
+          'in_bus' => false ,
     	];
         $postRef = $this->database->getReference( $this->table_name.'/'.$ref)->update($postData);
 
@@ -66,7 +67,8 @@ class TeacherController extends Controller
                });
              }
              // return redirect('teacher');
-         return redirect('teacher')->with( ['data' => $postData] );
+             $lang = $request['lang'] ;
+         return redirect($lang.'/teacher')->with( ['data' => $postData] );
         // if($postRef){
         // 	//alert('Teacher Not Added ');
         //     // return view('teacher.create')->with('status' , 'Teacher Added Successfully');
@@ -82,6 +84,8 @@ class TeacherController extends Controller
     public function edit($id){
     	$teacher = $this->database->getReference($this->table_name)->getChild($id)->getValue();
     	$gender = ["Male" , "Female"];
+      $lang = request()->get('lang');
+
     	return view('teacher.edit')->with('teacher' , $teacher)->with('gender' , $gender)->with('id',$id);  
     }
     public function update(Request $request ,$id){
@@ -98,8 +102,10 @@ class TeacherController extends Controller
         if($res_updated){
           $isUpdated = true ;
         }
+              $lang = request()->get('lang');
+
         
-    	return redirect('teacher')->with('update' , $isUpdated);  
+    	return redirect($lang. '/teacher')->with('update' , $isUpdated);  
 
         // if($res_updated){
         //   return redirect('teacher.edit')->with('status' , 'Contact Updated Successfully');	
@@ -114,7 +120,9 @@ class TeacherController extends Controller
         if($deleted_data){
           $isDeleted = true ;
         }
-          return redirect('teacher')->with('deleted' , $isDeleted);	
+                $lang = request()->get('lang');
+
+          return redirect($lang.'/teacher' )->with('deleted' , $isDeleted);	
     }
 
     

@@ -77,6 +77,7 @@
 
                             <form action="{{ url('teacher/edit/'.$id)}} " method="GET">
                               @csrf
+                              <input type="hidden" name = "lang" value = "{{app()->getLocale()}} ">
                               <button type="submit" class="btn btn-outline-success btn-sm">
                                  <span class="mdi mdi-pencil mdi-lg" style="color:green "></span>
                               </button>
@@ -84,12 +85,13 @@
                             <div style="margin:0 10px"></div>
                             <form >
                               @csrf
-                              <a class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure?')" href="{{ url('teacher/delete/'.$id)}}"> <span class="mdi mdi-delete-forever" style="color:red"></span></a>
+                              <a class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure?')" href="{{ url('teacher/delete/'.$id.'?lang='). app()->getLocale()}}"> <span class="mdi mdi-delete-forever" style="color:red"></span></a>
 
                             </form>
                             <div style="margin:0 10px"></div>
                             <form action="{{ url('teacher/details/'.$id) }}" method="GET">
                               @csrf
+                              <input type="hidden" name = "lang" value = "{{app()->getLocale()}} ">
                               <button type="submit" class="btn btn-outline-primary btn-sm">
                                   <span class="mdi mdi mdi-account" style="color:blue"></span>
                               </button>

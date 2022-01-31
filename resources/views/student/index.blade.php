@@ -45,7 +45,7 @@
                 <div class="card-body">
                  <div class="row  d-flex justify-content-between" style="margin:10px 10px">
                   <p class="card-title mb-0">@lang('dashboard.all_students')</p>
-                   <form action="{{url('student/create')}}" method="GET">
+                   <form action="{{url(app()->getLocale() .'/'. 'student/create')}}" method="GET">
                     @csrf
                         <button type="submit" class="btn btn-success">@lang('dashboard.add')</button>
                    </form>
@@ -88,18 +88,18 @@
                           <td >
 
                              <div class="row">
-                              <a type="submit" class="btn btn-outline-success btn-sm" href="{{ url('student/edit/'.$id) }}">
+                              <a type="submit" class="btn btn-outline-success btn-sm" href="{{ url('student/edit/'.$id .'?lang='). app()->getLocale() }}">
                                  <span class="mdi mdi-pencil mdi-lg" style="color:green "></span>
                               </a>
 
                             <div style="margin:0 10px"></div>
                             <form>
                               @csrf
-                              <a class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure?')" href="{{ url('student/delete/'.$id)}}"> <span class="mdi mdi-delete-forever" style="color:red"></span></a>
+                              <a class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure?')" href="{{ url('student/delete/'.$id.'?lang='). app()->getLocale() }}"> <span class="mdi mdi-delete-forever" style="color:red"></span></a>
                             </form>
                             <div style="margin:0 10px"></div>
                               @csrf
-                              <a type="submit" class="btn btn-outline-primary btn-sm" href="{{ url('student/details/'.$id) }}">
+                              <a type="submit" class="btn btn-outline-primary btn-sm" href="{{ url('student/details/'.$id.'?lang='). app()->getLocale() }}">
                                   <span class="mdi mdi-account" style="color:blue"></span>
                               </a>
                             </div>

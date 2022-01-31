@@ -18,10 +18,12 @@ class StudentController extends Controller
 
     public function __construct(Database $database)
     {
+
         $this->database = $database;
         $this->table_name = "students";
     }
 	public function index(Request $request){
+    $lang=$request['lang'];
     $word = $request['search'] ;
     if($word){
       $students_firebase = $this->database->getReference($this->table_name)->getValue();
@@ -74,18 +76,18 @@ class StudentController extends Controller
 
 
     	$postData = [
-          'name' => $request['name'],
-          'identification_number' => $request['identification_number'],
-          'email' => $request['email'],
-          'address' => $request['address'],
-          'phone' => $request['phone'],
-          'gender' => $request['gender'],
-          'section' => $request['section'],
+          'name' => $request['name']?$request['name'] : "",
+          'identification_number' => $request['identification_number']?$request['identification_number']:"",
+          'email' => $request['email'] ? $request['email']:"",
+          'address' => $request['address'] ? $request['address'] : "",
+          'phone' => $request['phone']? $request['phone']:"",
+          'gender' => $request['gender']?$request['gender']:"",
+          'section' => $request['section']?$request['section'] :"",
           'notification_id' => '',
           'password' => $pass ,
           'student_qr' => $image,
-          'lat' => '',
-          'long' => '',
+          'lat' => $request['lat']?$request['lat']:"",
+          'long' => $request['lng']?$request['lng']:"",
     	];
         
             $isAdded = false ;
@@ -131,8 +133,9 @@ class StudentController extends Controller
         // 	return redirect()->back() ->with('alert', 'Teacher Not Added');
         // 	// return view('teacher.create')->with('status' , 'Teacher Not Added ');
         // }
-
-           return redirect("student/details/$ref");
+           $lang = $request['lang'];
+            
+           return redirect("student/details/$ref?lang=" .$lang);
         
     }
 
@@ -151,15 +154,19 @@ class StudentController extends Controller
            'address' => $request['address'],
           'phone' => $request['phone'],
           'gender' => $request['gender'],
-          'section' => $request['section'],          
+          'section' => $request['section'],  
+          'lat' => $request['lat'] ,
+          'long' => $request['lng'],
+
     	];
         $res_updated = $this->database->getReference( $this->table_name.'/'.$key)->update($updateData);
         $isUpdated = false ;
         if($res_updated){
           $isUpdated = true ;
         }
-        
-      return redirect('student')->with('update' , $isUpdated);
+        $lang = $request['lang'] ;
+
+      return redirect($lang.'/student')->with('update' , $isUpdated);
 
         // if($res_updated){
         //   return redirect('teacher.edit')->with('status' , 'Contact Updated Successfully');	
@@ -174,7 +181,9 @@ class StudentController extends Controller
         if($deleted_data){
           $isDeleted = true ;
         }
-          return redirect('student')->with('deleted' , $isDeleted);	
+        $lang = request()->get('lang');
+
+          return redirect($lang.'/'.'student'.'?lang=' . $lang)->with('deleted' , $isDeleted);	
     }
     public function details($id)
     {
@@ -196,5 +205,28 @@ class StudentController extends Controller
       echo "Basic Email Sent. Check your inbox.";
    }
 
-   
+   public function location(){
+     return view('map2');
+    
+   }
+   public function submit_location(Request $request){
+    $lat = $request['lat'];
+    $lng = $request['lng'];
+    $lang2 = $request['lang'];
+
+    $lang = request()->get('lang');
+    return redirect( $lang .'/student/create')->with('lat',$lat)->with('lng',$lng);
+   }
+
+   public function edit_location(Request $request){
+    $lat = $request['lat'];
+    $lng = $request['lng'];
+    $id = $request['id'];
+    $lang2 = $request['lang'];
+    $lang = request()->get('lang');
+
+    return redirect('student/edit/'.$id.'?lang=' .$lang)->with('lat',$lat)->with('lng',$lng);
+   }
 }
+
+

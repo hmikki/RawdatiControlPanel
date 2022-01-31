@@ -9,11 +9,11 @@
                   <p class="card-title mb-0" style="margin : 20px 10px">{{$section['name']}}</p>
                   <hr>
                      <div class="col" style="margin : 20px 10px">
-                     <h6>Name : {{$section['name']}}</h6>
+                     <h6>@lang('dashboard.name') : {{$section['name']}}</h6>
                      <br>
-                     <h6>Category : {{$section['category']}}</h6>
+                     <h6>@lang('dashboard.category') : {{$section['category']}}</h6>
                      <br>
-                     <h6>Teacher Name : 
+                     <h6>@lang('dashboard.teacher_name') : 
                       @if(!$teachers== null)
                        @foreach($teachers as $key=>$teacher)
                             @if($key == $section['teacher_id'])
@@ -43,7 +43,7 @@
                           <thead>
                             <tr>
                               <th>#</th>
-                              <th>Student Name</th>
+                              <th>@lang('dashboard.student_name')</th>
                             </tr>  
                           </thead>
                           <tbody>
@@ -64,14 +64,16 @@
                       </div>
                     @endif
                     <div class="row" style="margin : 20px 10px">
-                         <form action="{{url('teacher/delete/'.$id)}}" method="POST">
+                         <form action="{{url('section/delete/'.$id)}}" method="GET">
                            @csrf
-                           <button type="submit" class="btn btn-danger">Delete</button>
+                           <input type="hidden" name = "lang" value = "{{app()->getLocale()}} ">
+                           <button type="submit" class="btn btn-danger">@lang('dashboard.delete')</button>
                          </form>
                          <div style="margin : 20px 10px" ></div>
                          <form action="{{url('section')}}" method="GET">
                            @csrf
-                           <button type="submit" class="btn btn-light">Cancel</button>
+                           <input type="hidden" name = "lang" value = "{{app()->getLocale()}} ">
+                           <button type="submit" class="btn btn-light">@lang('dashboard.cancel')</button>
                          </form>
                          <br>
                          

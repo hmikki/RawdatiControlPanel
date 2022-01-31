@@ -1,6 +1,7 @@
 <?php
 
 return[
+   'welcome' => 'أهلا و سهلا بك في روضتي',
    'dashboard' => 'الرئيسية' ,
    'teachers' => 'المعلمين',
    'students' => 'الطلاب' ,
@@ -45,6 +46,10 @@ return[
    'select_section' => 'اختر قسم ',
    'student_details' => 'تفاصيل الطالب',
    'select' => 'اختر',
+   'bus_teacher' => 'اختر المعلمة لتتبع الباص من خلالها ',
+
+   'select_location' => 'حدد الموقع',
+
 
 
   
