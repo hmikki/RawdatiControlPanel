@@ -8,8 +8,41 @@
                 <div class="card-body">
                   <p class="card-title mb-0" style="margin : 20px 10px">{{$section['name']}}</p>
                   <hr>
-                     <div class="col" style="margin : 20px 10px">
-                     <h6>@lang('dashboard.name') : {{$section['name']}}</h6>
+                     <div class="col-6" style="margin : 20px 10px">
+
+                       <table class="table table-striped table-borderless">
+                       
+                        <tbody>
+                         
+                           <tr>
+                            <td>@lang('dashboard.name') </td>
+                            <td >{{$section['name']}}</td>
+                           </tr>
+
+                           <tr>
+                            <td>@lang('dashboard.category') </td>
+                            <td >{{$section['category']}}</td>
+                           </tr>
+
+                           <tr>
+                            <td>@lang('dashboard.teacher_name') </td>
+                            <td >
+                                @if(!$teachers== null)
+                                 @foreach($teachers as $key=>$teacher)
+                                      @if($key == $section['teacher_id'])
+                                      {{$teacher['name']}}
+                                      @endif
+                                 @endforeach
+                                @else
+                                  --Unknown--
+                                @endif</td>
+                           </tr>
+
+
+                        </tbody>
+                    </table>
+
+                     <!-- <h6>@lang('dashboard.name') : {{$section['name']}}</h6>
                      <br>
                      <h6>@lang('dashboard.category') : {{$section['category']}}</h6>
                      <br>
@@ -24,7 +57,7 @@
                         --Unknown--
                       @endif
                         
-                     </h6>
+                     </h6> -->
                     </div>  
 
                     @php $isEmpty = true;  @endphp 
@@ -64,11 +97,11 @@
                       </div>
                     @endif
                     <div class="row" style="margin : 20px 10px">
-                         <form action="{{url('section/delete/'.$id)}}" method="GET">
+                         <!-- <form action="{{url('section/delete/'.$id)}}" method="GET">
                            @csrf
                            <input type="hidden" name = "lang" value = "{{app()->getLocale()}} ">
                            <button type="submit" class="btn btn-danger">@lang('dashboard.delete')</button>
-                         </form>
+                         </form> -->
                          <div style="margin : 20px 10px" ></div>
                          <form action="{{url('section')}}" method="GET">
                            @csrf

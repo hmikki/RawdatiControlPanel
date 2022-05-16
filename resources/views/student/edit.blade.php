@@ -68,14 +68,9 @@
                           let map;
                           let pos = { lat: 31.490077, lng: 34.462188 };
 
-                          let myId = location.search.split('id=')[1] ? location.search.split('id=')[1] : 'myDefaultValue';
-                          let myLng = location.search.split('lng=')[1] ? location.search.split('lng=')[1] : 'myDefaultValue';
-                          let myLat = location.search.split('lat=')[1] ? location.search.split('lat=')[1] : 'myDefaultValue';
-                          let numberLng = parseFloat(myLng).toFixed(14);
-                          let numberLat = parseFloat(myLat).toFixed(14);
-                          let longitude = double.Parse(myLng, CultureInfo.InvariantCulture);
-                          let latitude = double.Parse(myLat, CultureInfo.InvariantCulture);
+                         
 
+                          let data =document.getElementById('lng').value;
 
 
 

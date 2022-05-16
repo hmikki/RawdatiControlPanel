@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html  lang="{{app()->getLocale()}}">
 
 <head>
   <meta charset="utf-8">
@@ -12,13 +12,16 @@
   <link rel="stylesheet" href="{{asset('vendors/ti-icons/css/themify-icons.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('js/select.dataTables.min.css')}}">
   <link rel="stylesheet" href="{{asset('css/vertical-layout-light/style.css')}}">
-  <link rel="shortcut icon" href="{{asset('images/favicon.png')}}" />
+  <link rel="shortcut icon" href="{{asset('images/r-logo.png')}}" />
   <link rel="stylesheet" href="{{asset('vendors/select2/select2.min.css')}}">
   <link rel="stylesheet" href="{{asset('vendors/select2-bootstrap-theme/select2-bootstrap.min.css')}}">
   <link rel="stylesheet" href="{{asset('vendors/mdi/css/materialdesignicons.min.css')}}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
    crossorigin=""/>
+
+  <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
@@ -26,25 +29,14 @@
   <div class="container-scroller">
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo mr-5" href="index.html"><img src="{{asset('images/logo.svg')}}" class="mr-2" alt="logo"/></a>
-        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="{{asset('images/logo-mini.svg')}}" alt="logo"/></a>
+        <a class="navbar-brand brand-logo mr-5" ><img src="{{asset('images/logo.svg')}}" class="mr-2" alt="logo"/></a>
+        <a class="navbar-brand brand-logo-mini" ><img src="{{asset('images/r-logo.png')}}" alt="logo"/></a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
           <span class="icon-menu"></span>
         </button>
-        <ul class="navbar-nav mr-lg-2">
-          <li class="nav-item nav-search d-none d-lg-block">
-            <div class="input-group">
-              <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
-                <span class="input-group-text" id="search">
-                  <i class="icon-search"></i>
-                </span>
-              </div>
-              <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
-            </div>
-          </li>
-        </ul>
+        
         <ul class="navbar-nav navbar-nav-right">
           
         
@@ -65,7 +57,7 @@
           </li>
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-              <img src="{{asset('images/admin.png')}}" alt="profile"/>
+              <img src="{{asset('images/admin.svg')}}" alt="profile"/>
             </a>
            
           </li>
@@ -91,7 +83,7 @@
           </li>
           <li class="nav-item {{$activePage == 'teacher' ? ' active' : '' }}" >
             <a class="nav-link" data-toggle="collapse" href="#ui-basic"  aria-controls="ui-basic">
-              <i class="icon-layout menu-icon"></i>
+              <i class='fas fa-chalkboard-teacher' style="margin-right: 10px;"></i>
               <span class="menu-title">@lang('dashboard.teachers')</span>
               <i class="menu-arrow"></i>
             </a>
@@ -106,7 +98,7 @@
           </li>
           <li class="nav-item {{$activePage == 'student_details' || $activePage =='student_create' || $activePage =='student_edit' ? ' active' : '' }}">
             <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
-              <i class="icon-columns menu-icon"></i>
+              <i class='fas fa-user-graduate' style="margin-right: 10px;"></i>
               <span class="menu-title">@lang('dashboard.students')</span>
               <i class="menu-arrow"></i>
             </a>
@@ -130,18 +122,29 @@
               </ul>
             </div>
           </li>
-         
+         <li class="nav-item {{ $activePage == 'attendance' ? ' active' : '' }}">
+            <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
+              <i class="icon-grid-2 menu-icon"></i>
+              <span class="menu-title">@lang('dashboard.attendance')</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="tables">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{{url(app()->getLocale() .'/'. 'attendance')}}">@lang('dashboard.attendance_report')</a></li> 
+              </ul>
+            </div>
+          </li>
         </ul>
       </nav>
 
 
       @yield('page_content')
-    <footer class="footer">
+   <!--  <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
             <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
             <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
           </div>
-        </footer>
+        </footer> -->
         <!-- partial -->
       </div>
       <!-- main-panel ends -->

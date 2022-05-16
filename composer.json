@@ -14,7 +14,8 @@
         "laravel/framework": "^8.65",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "larswiegers/laravel-maps": "^0.8.0"
+        "larswiegers/laravel-maps": "^0.8.0",
+        "stevebauman/location": "^6.2"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

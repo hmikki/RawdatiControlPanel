@@ -53,10 +53,18 @@ class TeacherController extends Controller
           'password' => $pass ,
           'in_bus' => false ,
     	];
-        $postRef = $this->database->getReference( $this->table_name.'/'.$ref)->update($postData);
+      $authData = [
+          'user_id' =>$ref,
+          'identification_number' => $request['identification_number']?$request['identification_number']:"",
+          'password' => $pass ,
+          'user_type' => "teacher",
+      ];
 
-         if($postData){
-              $data = array('name'=>"{{$request['name']}}" , 'password' => "{{$pass}}");
+        $postRef = $this->database->getReference( $this->table_name.'/'.$ref)->update($postData);
+        $authRef = $this->database->getReference( "users".'/'.$ref)->update($authData);
+
+         if($postData && $authData){
+              $data = array('name'=>$request['name'] , 'password' => $pass);
                  
                 Mail::send(['text'=>'mail'], $data, function($message) use($request) {
                   $email_address = $request['email'] ;

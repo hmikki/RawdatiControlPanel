@@ -35,6 +35,10 @@ Route::group(['prefix' => '{locale}'] , function(){
 	 Route::get('section', 'SectionController@index')->middleware('lang');
 
 
+	 Route::get('attendance', 'MainController@attendance')->middleware('lang');
+     Route::get('get_attendance', 'MainController@get_attendance')->middleware('lang');
+
+
 
 });
 
@@ -45,6 +49,8 @@ Route::get('/', function () {
 Route::get('test/{id}' , 'TestController@generate');
 
 Route::get('select_teacher' , 'MainController@selectTeacher');
+Route::get('select_kindergarten_location' , 'MainController@selectKindergartenLocation');
+ 
 
 
  Route::get('buttons' , 'MainController@index2');
@@ -77,6 +83,10 @@ Route::get('select_teacher' , 'MainController@selectTeacher');
  Route::get('section/delete/{id}', 'SectionController@destroy');
  Route::get('section/cancel', 'SectionController@cancel');
  Route::get('section/details/{id}' , 'SectionController@details')->middleware('lang');
+
+
+ //Route::get('attendance', 'MainController@attendance');
+ //Route::get('get_attendance', 'MainController@get_attendance');
 
 
 

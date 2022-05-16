@@ -11,8 +11,69 @@
                      <div class="row justify-content-between">
 
 
-                           <div class="col-7" style="margin : 20px 10px">
-                           <h6>@lang('dashboard.name') : {{$student['name']}}</h6>
+                      <div class="col-7" style="margin : 20px 10px">
+                      <table class="table table-striped table-borderless">
+                       
+                        <tbody>
+                         
+                           <tr>
+                            <td>@lang('dashboard.name') </td>
+                            <td >{{$student['name']}}</td>
+                           </tr>
+
+                           <tr>
+                            <td>@lang('dashboard.email') </td>
+                            <td >{{$student['email']}}</td>
+                           </tr>
+
+                           <tr>
+                            <td>@lang('dashboard.identification_number') </td>
+                            <td >{{$student['identification_number']}}</td>
+                           </tr>
+
+                           <tr>
+                            <td>@lang('dashboard.phone') </td>
+                            <td >{{$student['phone']}}</td>
+                           </tr>
+
+                           <tr>
+                            <td>@lang('dashboard.address')  </td>
+                            <td >{{$student['address']}}</td>
+                           </tr>
+
+                           <tr>
+                            <td>@lang('dashboard.password') </td>
+                            <td >{{$student['password']}}</td>
+                           </tr>
+
+                           <tr>
+                            <td>@lang('dashboard.gender') </td>
+                            <td >{{$student['gender']}}</td>
+                           </tr>
+
+                           
+
+                           <tr>
+                            <td>@lang('dashboard.section') </td>
+                            <td > @foreach($sections as $key => $section)
+                                   @if($student['section'] == $key )
+                                     {{$section['name']}}
+                                   @endif 
+                                 @endforeach</td>
+                           </tr>
+
+                           <tr>
+                            <td>@lang('dashboard.category') </td>
+                            <td >@foreach($sections as $key => $section)
+                                   @if($student['section'] == $key )
+                                     {{$section['category']}}
+                                   @endif 
+                                 @endforeach</td>
+                           </tr>
+
+                        </tbody>
+                    </table>
+                           <!-- <h6>@lang('dashboard.name') : {{$student['name']}}</h6>
                            <br>
                            <h6>@lang('dashboard.email') : {{$student['email']}}</h6>
                            <br>
@@ -42,7 +103,7 @@
                                  @endif 
                                @endforeach
                              
-                           </h6>
+                           </h6> -->
                            <br>
                           </div>
                           <div class="col-4" >
@@ -54,11 +115,11 @@
                     <div class="row" style="margin : 20px 10px">
                           
 
-                         <form action="{{ url('student/delete/'.$id)  }}" method="GET">
+                         <!-- <form action="{{ url('student/delete/'.$id)  }}" method="GET">
                            @csrf
                             <input type="hidden" name = "lang" value = "{{app()->getLocale()}} ">
                            <button type="submit" class="btn btn-danger">@lang('dashboard.delete')</button>
-                         </form>
+                         </form> -->
                          <div style="margin : 20px 10px" ></div>
                          <form action="{{url(request()->get('lang') .'/'. 'student')}}" method="GET">
                            @csrf

@@ -86,9 +86,16 @@ class StudentController extends Controller
           'notification_id' => '',
           'password' => $pass ,
           'student_qr' => $image,
+          'image' => "",
           'lat' => $request['lat']?$request['lat']:"",
           'long' => $request['lng']?$request['lng']:"",
     	];
+      $authData = [
+          'user_id' =>$ref,
+          'identification_number' => $request['identification_number']?$request['identification_number']:"",
+          'password' => $pass ,
+          'user_type' => "student",
+      ];
         
             $isAdded = false ;
         
@@ -96,9 +103,10 @@ class StudentController extends Controller
               // $postRef = $ref->setValue($postData);
               // dd($postRef);
             $postRef = $this->database->getReference( $this->table_name.'/'.$ref)->update($postData);
+            $authRef = $this->database->getReference( "users".'/'.$ref)->update($authData);
 
-             if($postRef){
-              $data = array('name'=>"{{$request['name']}}" , 'password' => "{{$pass}}");
+             if($postRef && $authRef){
+              $data = array('name'=>$request['name'] , 'password' => $pass);
                  
                 Mail::send(['text'=>'mail'], $data, function($message) use($request) {
                   $email_address = $request['email'] ;
@@ -118,7 +126,19 @@ class StudentController extends Controller
            $sections = $this->database->getReference('sections')->getValue();
 
            
-
+           try {  
+               $email = $request['email'];  
+               $password = $pass;  
+               $authRef = app('firebase.auth')->createUser([  
+                  'email' => $email,  
+                 'password' => $password  ,
+                 'uid' => $ref
+               ]);  
+              
+           }   
+           catch (\Kreait\Firebase\Exception\Auth\EmailExists $ex) {  
+             //echo 'email already exists';  
+           }  
 
         
 
@@ -134,6 +154,8 @@ class StudentController extends Controller
         // 	// return view('teacher.create')->with('status' , 'Teacher Not Added ');
         // }
            $lang = $request['lang'];
+
+           //dd("done");
             
            return redirect("student/details/$ref?lang=" .$lang);
         
@@ -142,6 +164,11 @@ class StudentController extends Controller
     public function edit($id){
         $student = $this->database->getReference($this->table_name)->getChild($id)->getValue();
         $sections = $this->database->getReference('sections')->getValue();
+        // $clientIP = '103.239.147.187'; 
+        // $ip = \Request::getClientIp(true);
+  
+        // $data = \Location::get(request()->ip());
+        // dd($data);
     	$gender = ["Male" , "Female"];
     	return view('student.edit')->with('student' , $student)->with('sections' , $sections)->with('gender' , $gender)->with('id',$id);  
     }
@@ -151,7 +178,7 @@ class StudentController extends Controller
          'name' => $request['name'],
           'identification_number' => $request['identification_number'],
           'email' => $request['email'],
-           'address' => $request['address'],
+          'address' => $request['address'],
           'phone' => $request['phone'],
           'gender' => $request['gender'],
           'section' => $request['section'],  

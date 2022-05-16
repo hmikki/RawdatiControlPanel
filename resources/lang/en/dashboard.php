@@ -59,13 +59,21 @@ return[
    'select' => 'Select',
 
    'bus_teacher' => 'Select a teacher to be tracked in the Bus',
-      'select_location' => 'Select Location',
+   'select_location' => 'Select Location',
 
 
 
-
+'edit_kindergarten_location' => 'Edit Kindergarten Location ',
    
+'attendance_report' => "Attendance Report",
+'attendance' => 'Attendance',
+'select_date' => 'Select date',
+'no_attendance' => "No student attended on this date",
 
+
+'go' => 'Go',
+'month' => 'Month',
+'day' => 'Day',
 
 
 ];

@@ -1,3 +1,4 @@
-Hi, {{ $name }}
+
+Hi, {!! $name !!}
 Rawdti app welcomes you
-your password : {{$password}} keep it secret
+your password : {!! $password !!} keep it secret

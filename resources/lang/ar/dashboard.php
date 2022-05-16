@@ -49,8 +49,17 @@ return[
    'bus_teacher' => 'اختر المعلمة لتتبع الباص من خلالها ',
 
    'select_location' => 'حدد الموقع',
+   'edit_kindergarten_location' => 'تعديل موقع الروضة ',
 
 
+   'attendance_report' => "تقرير حضور",//Attendance Report
+   'attendance' => 'الحضور',
+   'select_date' => 'حدد التاريخ',
+   'no_attendance' => "لا يوجد طلاب في هذا اليوم",
 
-  
+   'go' => 'اذهب',
+   'month' => 'الشهر',
+   'day' => 'اليوم',
+  //No student attended on this date
+
 ];

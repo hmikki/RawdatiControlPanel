@@ -45,7 +45,9 @@
             <div class="col-md-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                     <div class="row  d-flex justify-content-between" style="margin:10px 10px">
+                 <div class="row  d-flex justify-content-between" style="margin:10px 10px">
+
+                  @if(app()->getLocale() == 'en')
                        <p class="card-title mb-0">@lang('dashboard.all_teachers')</p>
                        <form action="{{url(app()->getLocale() .'/'.'teacher/create')}}" method="GET">
                         @csrf
@@ -53,7 +55,15 @@
                        </form>
                        
 
-                     </div>
+                     
+                  @else
+                      <p class="card-title mb-0">@lang('dashboard.all_teachers')</p>
+                       <form action="{{url(app()->getLocale() .'/'.'teacher/create')}}" method="GET">
+                        @csrf
+                            <button type="submit" class="btn btn-success">@lang('dashboard.add')</button>
+                       </form>
+                  @endif
+                  </div>   
                   <div class="table-responsive">
                     <table class="table table-striped table-borderless" >
                       <thead>

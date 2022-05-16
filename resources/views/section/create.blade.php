@@ -16,7 +16,7 @@
                     <input type="hidden" name = "lang" value = "{{app()->getLocale()}} ">
                     <div class="form-group">
                       <label for="name">@lang('dashboard.name')</label>
-                      <input type="text" class="form-control" name="name" id="name" placeholder="Name">
+                      <input type="text" class="form-control" name="name" id="name" placeholder="@lang('dashboard.name')">
                     </div>
                     
                     <div class="form-group">

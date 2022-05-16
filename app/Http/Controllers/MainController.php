@@ -40,6 +40,57 @@ class MainController extends Controller
      public function create(){
     	return view('teacher.create');
     }
+    public function selectKindergartenLocation(Request $request){
+        $postData = [
+            'name' => 'روضة دنيا الألوان',
+            'lat' => $request['lat']?$request['lat']:"",
+            'long' => $request['lng']?$request['lng']:"",
+        ];
+        $postRef = $this->database->getReference( "kindergarten".'/'."rawdati")->update($postData);
 
+        $lang = $request['lang'] ;
+         return redirect()->back();
+
+    }
+
+
+public function attendance(){
+ return view('attendance')->with('isFirst' , true);
+}
+
+public function get_attendance(Request $request){
+   $day = $request['day'];
+   $month = $request['month'];
+   $students = $this->database->getReference('students')->getValue();
+
+        if($day){
+          $date = '2022' .'/' . $month . '/' . $day ;
+          //dd($date);
+          $attendances_firebase = $this->database->getReference('attendances')->getValue();
+          $attendances = array();
+          foreach ($attendances_firebase as $key => $value) {
+            //dd($value['date']);
+             if ($value['date'] == $date) {
+             $attendances[$key]  = $value;
+            }
+
+            /*if ($day == -1 || $month == -1) {
+              $attendances = $this->database->getReference("attendances")->getValue();
+              return view('attendance');
+         
+            }
+           elseif ( strcmp($value['date'], $date)) {
+              //dd($value['name']) ;
+             $attendances[$key]  = $value;
+            }*/
+          }
+            return view('attendance')->with('attendances',$attendances)->with('students' ,$students )->with('isFirst' , false);
+      }
+       $attendances = $this->database->getReference("attendances")->getValue();
+       return view('attendance')->with('isFirst' , false);
+            
+      
+  
+}
 
 }
