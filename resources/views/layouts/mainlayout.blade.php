@@ -36,10 +36,10 @@
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
           <span class="icon-menu"></span>
         </button>
-        
+
         <ul class="navbar-nav navbar-nav-right">
-          
-        
+
+
           <!-- <li class="nav-item nav-settings d-none d-lg-flex">
             <a class="nav-link" href="{{url('localization')}}" >
               <i class="icon-ellipsis"></i>
@@ -59,7 +59,7 @@
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
               <img src="{{asset('images/admin.svg')}}" alt="profile"/>
             </a>
-           
+
           </li>
         </ul>
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
@@ -70,18 +70,18 @@
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
       <!-- partial:partials/_settings-panel.html -->
-      
-     
-<!-- {{($activePage == 'teacher_details' || $activePage == 'teacher_edit') ? ' active' : '' }}
- -->   <nav class="sidebar sidebar-offcanvas" id="sidebar">
+
+
+
+   <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
-          <li class="nav-item{{ $activePage == 'dashboardd' ? ' active' : '' }}">
+          <li class="nav-item{{ ($activePage == 'dashboard')?' active' : '' }}">
             <a class="nav-link" href="{{url(app()->getLocale() .'/'.'index'.'?name=admin&password=123456')}}">
               <i class="icon-grid menu-icon"></i>
               <span class="menu-title">@lang('dashboard.dashboard')</span>
             </a>
           </li>
-          <li class="nav-item {{$activePage == 'teacher' ? ' active' : '' }}" >
+          <li class="nav-item {{($activePage == 'teacher')?' active' : '' }}" >
             <a class="nav-link" data-toggle="collapse" href="#ui-basic"  aria-controls="ui-basic">
               <i class='fas fa-chalkboard-teacher' style="margin-right: 10px;"></i>
               <span class="menu-title">@lang('dashboard.teachers')</span>
@@ -96,7 +96,7 @@
  -->              </ul>
             </div>
           </li>
-          <li class="nav-item {{$activePage == 'student_details' || $activePage =='student_create' || $activePage =='student_edit' ? ' active' : '' }}">
+          <li class="nav-item {{($activePage == 'student_details' || $activePage =='student_create' || $activePage =='student_edit')?' active' : '' }}">
             <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
               <i class='fas fa-user-graduate' style="margin-right: 10px;"></i>
               <span class="menu-title">@lang('dashboard.students')</span>
@@ -109,7 +109,7 @@
               </ul>
             </div>
           </li>
-          <li class="nav-item {{ $activePage == 'section_details' || $activePage =='section_create' || $activePage =='section_edit'? ' active' : '' }}" >
+          <li class="nav-item {{($activePage == 'section_details' || $activePage =='section_create' || $activePage =='section_edit')?' active' : '' }}" >
             <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
               <i class="icon-bar-graph menu-icon"></i>
               <span class="menu-title">@lang('dashboard.sections')</span>
@@ -122,7 +122,7 @@
               </ul>
             </div>
           </li>
-         <li class="nav-item {{ $activePage == 'attendance' ? ' active' : '' }}">
+         <li class="nav-item {{($activePage == 'attendance')?' active' : '' }}">
             <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
               <i class="icon-grid-2 menu-icon"></i>
               <span class="menu-title">@lang('dashboard.attendance')</span>
@@ -130,7 +130,7 @@
             </a>
             <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{url(app()->getLocale() .'/'. 'attendance')}}">@lang('dashboard.attendance_report')</a></li> 
+                <li class="nav-item"> <a class="nav-link" href="{{url(app()->getLocale() .'/'. 'attendance')}}">@lang('dashboard.attendance_report')</a></li>
               </ul>
             </div>
           </li>
@@ -198,7 +198,7 @@
   <!--<script src="{{asset('js/hoverable-collapse.js')}}"></script>-->
 
 
- 
+
 
 
 
